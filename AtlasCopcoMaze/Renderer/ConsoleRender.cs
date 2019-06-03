@@ -30,7 +30,8 @@ namespace AtlasCopcoMaze
       Console.WriteLine("         ");
       Console.WriteLine("++++++++++++++++++++++++++++++++++ Good Luck ++++++++++++++++++++++++++++++++++++++++++++++", Color.DarkKhaki);
       Console.WriteLine("         ");
-      Console.WriteLine("please enter your maze size to start.", Color.DarkGoldenrod);
+      Console.WriteLine("please enter your maze size to start.");
+      Console.WriteLine("please use size=3 for intial demo , you can change maze size after handling the code.", Color.DarkGoldenrod);
     }
     public void Congratulations(Play play)
     {
