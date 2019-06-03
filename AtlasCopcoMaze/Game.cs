@@ -8,7 +8,6 @@ namespace AtlasCopcoMaze
   public class Game
   {
     #region Variables
-
     private State _currentState { set; get; }
     private Play _play;
     private IMazeIntegration _mazeIntegration;
@@ -16,7 +15,14 @@ namespace AtlasCopcoMaze
     private IInput _input;
 
     #endregion
-
+    /// <summary>
+    /// Game states: the game consistes of 4 main states :
+    /// -Start : to get the answer if the player wants to play or not.
+    /// -GameDescription : Display How to paly to the player.
+    /// -NewGame : the player choose the mase size and the game started by building the maze
+    /// -InProgress : the player presses the arrows till he wins / lose the game
+    /// </summary>
+    
     public Game(IMazeIntegration mazeIntegration, IRender render, IInput input)
     {
       _mazeIntegration = mazeIntegration;
@@ -27,6 +33,9 @@ namespace AtlasCopcoMaze
     }
 
     #region Pubic interface
+    /// <summary>
+    /// if the player didn't press ESC then switch between game states.
+    /// </summary>
     public void Run()
     {
       var key = ConsoleKey.NoName;
@@ -55,7 +64,11 @@ namespace AtlasCopcoMaze
     }
     #endregion
 
-    #region private methods 
+    #region private methods
+    /// <summary>
+    /// if the player press one  then start the game , else just ignore it.
+    /// </summary>
+    /// <param name="key"></param>
     private void StartState(ConsoleKey key)
     {
       if (_input.IsOne(key))
@@ -80,11 +93,14 @@ namespace AtlasCopcoMaze
       else if(mazeSize<=1){ _render.Message(MessageTypes.InvalidInput); }
       else
       {
+        //---------Build the maze and get the entrance room -----------
         _play = new Play();
         _play.MazeSize = mazeSize.Value;
         _mazeIntegration.BuildMaze(_play.MazeSize);
         _play.CurrentRoom = _mazeIntegration.GetEntranceRoom();
         string desc = _mazeIntegration.GetDescription(_play.CurrentRoom);
+
+        //---------Render the maze and the moves -----------
         _play.VisitedRooms.Add(new Room()
         {
           Description = desc,
@@ -92,13 +108,16 @@ namespace AtlasCopcoMaze
           HasTreasure = false,
           RoomId = _play.CurrentRoom
         });
-       
         _render.EntranceRoom(_play.CurrentRoom);
         _render.Message(MessageTypes.Instruction);
         _render.Moves(_play);
         _currentState = State.InProgress;
       }
     }
+    /// <summary>
+    /// In InProgress State : the player continue pressing the arrow until he wins or lose.
+    /// </summary>
+    /// <param name="key"></param>
     private void InProgressState(ConsoleKey key)
     {
       if (_input.IsArrow(key))
@@ -121,6 +140,7 @@ namespace AtlasCopcoMaze
           direction = 'W';
         }
 
+        //-------------get next room-----------------------------------------
         int? nextRoom = _mazeIntegration.GetRoom(_play.CurrentRoom, direction);
         if (nextRoom == null)
         {
@@ -131,11 +151,11 @@ namespace AtlasCopcoMaze
           _input.clearInput();
           _play.CurrentRoom = nextRoom.Value;
           GetRoomInfo(_play.CurrentRoom);
-
         }
       }
       else
       {
+        //--------reder message please use the arrows ------------
         _render.Message(MessageTypes.Instruction);
       }
     }
@@ -149,6 +169,15 @@ namespace AtlasCopcoMaze
       _render.GameOver(_play);
       _currentState = State.Start;
     }
+    /// <summary>
+    /// GetRoomInfo is getting all the room info and making the changes according to the room type
+    ///- get all room information
+    /// - add  steps +1
+    /// - check whether Treasure or Trap and take the actions for HP.
+    /// - add to visited rooms
+    /// - render the new maze and moves
+    /// </summary>
+    /// <param name="roomId"></param>
     private void GetRoomInfo(int roomId)
     {
       _play.Steps = _play.Steps + 1;

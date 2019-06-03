@@ -9,6 +9,9 @@ namespace AtlasCopcoMaze
 {
   public interface IRender
   {
+    /// <summary>
+    /// This Interface mission is to Render On Console.
+    /// </summary>
     void GameDescription();
     void Congratulations(Play play);
     void GameOver(Play play);

@@ -34,7 +34,6 @@ namespace AtlasCopcoMaze
     }
     public void Congratulations(Play play)
     {
-      
       int DA = 34;
       int V = 139;
       int ID = 34;
@@ -47,11 +46,9 @@ namespace AtlasCopcoMaze
       RenderMaze(play);
       Console.WriteLine("   ");
       Message(MessageTypes.NewGame);
-      
     }
     public void GameOver(Play play)
     {
-      
       int DA = 255;
       int V = 0;
       int ID = 0;
@@ -64,7 +61,6 @@ namespace AtlasCopcoMaze
       RenderMaze(play);
       Console.WriteLine("   ");
       Message(MessageTypes.NewGame);
-      
     }
     public void Message(MessageTypes MessageType)
     {

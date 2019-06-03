@@ -8,6 +8,10 @@ namespace AtlasCopcoMaze
 {
  public interface IInput
   {
+    /// <summary>
+    /// This Interface mission is to read from console and get the values.
+    /// </summary>
+    /// <returns></returns>
     ConsoleKey ReadInput();
     bool IsEscape(ConsoleKey key);
     bool IsOne(ConsoleKey key);
