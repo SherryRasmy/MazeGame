@@ -10,7 +10,7 @@ You can change the maze size by only changing it in the dummy Integration.<br>
 The maze game now sattled to be **3x3** size.<br>
 So please use size **3** to work for now.<br>
 ### Philosophy 
-![Maze](Images/maze.PNG) <br>
+![Maze](/Images/maze.PNG) <br>
 The Game consists of states:<br>
 1-**Start State :** where we ask the player where he wants to play or now.<br>
 2-**Game Description State :** where we explain the rules to the player.<br>
