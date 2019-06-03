@@ -20,6 +20,7 @@ The Game consists of states:<br>
 
 ### External Libraries used
 
--Colorful.Console from NuGet.<br>
--Alba.CsConsoleFormat from NuGet.
+-**Colorful.Console :** to build colorful Console text. <br>
+-**Alba.CsConsoleFormat :** to build the maze.<br>
+-**SimpleInjector :** in dependency Injection.<br>
 
